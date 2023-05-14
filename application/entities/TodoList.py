@@ -1,16 +1,17 @@
 from datetime import date
-from typing import Optional
+from typing import Optional, List
 
 from application.entities.BaseList import BaseList
 from application.entities.TodoItem import TodoItem
 
 
 class TodoList(BaseList):
-	def __init__(self, id: int, name: str, creation_date: date, deletion_time: Optional[date] = None):
-		super().__init__(id=id, name=name, creation_date=creation_date)
+	def __init__(self, id: int, name: str, creation_date: date, deletion_time: Optional[date] = None,
+	       		update_date: Optional[date] = None, item_list: List[TodoItem]=[], comp_perc: Optional[int]=None):
+		super().__init__(id=id, name=name, creation_date=creation_date,item_list=item_list)
 		self.update_date = None
 		self.deletion_time = deletion_time
-		self.completion_percentage = 0
+		self.completion_percentage = comp_perc
 		
 	def add_item(self, item: TodoItem) -> None:
 		super().add_item(item)
@@ -29,6 +30,9 @@ class TodoList(BaseList):
 			setattr(self, key, value)
 		self.set_update_date(date.today())
 	
-	def set_update_date(self, update_time: date):
+	def set_update_date(self, update_time: date) -> None:
 		self.update_date = update_time
+	
+	def set_item_list(self, item_list: List[TodoItem]) -> None:
+		self.item_list = item_list
 

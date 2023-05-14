@@ -12,5 +12,13 @@ class BaseRepository:
         ...
     
     @abstractmethod
-    def insert(self, item):
+    def insert(self, model):
+        ...
+
+    @abstractmethod
+    def update(self, id, info):
+        ...
+    
+    @abstractmethod
+    def delete(self, id):
         ...

@@ -5,11 +5,11 @@ from typing import List
 from application.entities.BaseItem import BaseItem
 
 class BaseList(ABC):
-	def __init__(self, id: int, name: str, creation_date: date):
+	def __init__(self, id: int, name: str, creation_date: date, item_list: List[BaseItem] = []):
 		self.ID = id
 		self.name = name
 		self.creation_date = creation_date
-		self.item_list:List[BaseItem] = []
+		self.item_list: List[BaseItem] = item_list
 
 	@abstractmethod
 	def add_item(self, item: BaseItem) -> None:
@@ -60,3 +60,4 @@ class BaseList(ABC):
 				start = middle + 1
 
 		return end if self.item_list[end].ID == id else -1
+	
