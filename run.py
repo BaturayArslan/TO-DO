@@ -1,20 +1,55 @@
 from application.app import create_app 
 
-from application.entities.TodoList import TodoList
+# Temizlenecek Importlar
 from datetime import date
-from application.repositories.ListRepository import ListRepository
+from application.entities.TodoList import TodoList
 from application.providers.orm.models import ListModel, ItemModel
+
 from application.dto.request.UpdateListRequest import UpdateListRequest
+from application.dto.request.GetListRequest import GetListRequest
+from application.dto.request.AddListRequest import AddListRequest
+
+from application.dto.request.UpdateItemRequest import UpdateItemRequest
+from application.dto.request.GetItemRequest import GetItemRequest
+from application.dto.request.AddItemRequest import AddItemRequest
+
+from application.repositories.ListRepository import ListRepository
+from application.repositories.ItemRepository import ItemRepository
+
+from application.use_cases.item.AddItemUseCase import AddItemUseCase
+from application.use_cases.item.GetItemUseCase import GetItemUseCase
+from application.use_cases.item.UpdateItemUseCase import UpdateItemUseCase
+
+from application.use_cases.list.AddListUseCase import AddListUseCase
+from application.use_cases.list.GetListUseCase import GetListUseCase
+from application.use_cases.list.UpdateListUseCase import UpdateListUseCase
 
 if __name__ == "__main__":
     app = create_app(False)
-    test = ListRepository()
-    item = ItemModel(creation_date = date.today(), update_date = None, deletion_date = None, content = "This Must Be Done", status="TODO")
-    list = ListModel(name="Hello World", creation_date = date.today(), update_date = None, deletion_date = None, completion_percentage=0)
-    update_list_req = UpdateListRequest(name="baturay",deletion_date_str="26/12/1998")
-    #test.insert(list)
-    print(test.get(4))
-    # test.update(1, update_list_req)
-    # print(test.get(1))
+
+    list_repo = ListRepository()
+    item_repo = ItemRepository()
+
+    add_item_usecase = AddItemUseCase(item_repo)
+    get_item_usecase = GetItemUseCase(item_repo)
+    update_item_usecase = UpdateItemUseCase(item_repo)
+
+    add_list_usecase = AddListUseCase(list_repo)
+    get_list_usecase = GetListUseCase(list_repo)
+    update_list_usecase = UpdateListUseCase(list_repo)
+
+    # Successfully add new list
+    # add_list_req = AddListRequest(deletion_date_str="12/02/1998")
+    # todo_list = add_list_usecase.process(add_list_req)
+    # print(todo_list)
+
+    # Successfully add new item to list
+    # add_item_req = AddItemRequest(content="Make dinner", status=3, list_id=1)
+    # todo_list = add_item_usecase.process(add_item_req)
+    # print(todo_list)
+
+    
+
+    
 
     #app.run()

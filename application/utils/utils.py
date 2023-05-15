@@ -32,7 +32,7 @@ def _item_model_to_entity(model: ItemModel) -> TodoItem:
         creation_date=model.creation_date,
         status=ItemStatus[model.status].value,
         content=model.content,
-        deletion_date=model.deletion_date,
+        deletion_time=model.deletion_date,
         update_date=model.update_date
     )
     return todo_item
@@ -64,3 +64,21 @@ def item_entity_to_model(item_entity: TodoItem) -> ItemModel:
         content=item_entity.content
     )
     return model
+
+def item_copy_to_model(item: TodoItem, model: ItemModel):
+    model.update_date = item.update_date
+    model.status = item.status.name
+    model.deletion_date = item.deletion_time
+    model.creation_date = item.creation_date
+
+def list_copy_to_model(list: TodoList, model: ListModel):
+    model.update_date = list.update_date
+    model.deletion_date = list.deletion_time
+    model.completion_percentage = list.completion_percentage
+    model.name = list.name
+    model.creation_date = list.creation_date
+    
+    for item in list.item_list:
+        for item_model in model.item_list:
+            if (item.ID == item_model.id):
+                item_copy_to_model(item, item_model)

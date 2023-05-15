@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 
 @dataclass
-class UpdateListRequest:
+class UpdateItemRequest:
     id: int
     name: str = None
     deletion_date_str: str = None

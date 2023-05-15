@@ -14,15 +14,12 @@ class BaseList(ABC):
 	@abstractmethod
 	def add_item(self, item: BaseItem) -> None:
 		self.item_list.append(item)
-
-		def takeId(elem: BaseItem):
-			return elem.ID
-		
-		self.item_list.sort(takeId)
+		self.__sort()
 
 	
 	@abstractmethod
 	def delete_item(self, id: int) -> None:
+		self.__sort()
 		index = self.__find_item_index(id)
 
 		if(index is not -1):
@@ -32,6 +29,7 @@ class BaseList(ABC):
 	
 	@abstractmethod
 	def update_item(self, id: int, values: dict) -> None:
+		self.__sort()
 		index = self.__find_item_index(id)
 
 		if(index is -1):
@@ -60,4 +58,10 @@ class BaseList(ABC):
 				start = middle + 1
 
 		return end if self.item_list[end].ID == id else -1
+
+	def __sort(self):
+		def takeId(elem: BaseItem):
+			return elem.ID
+		
+		self.item_list.sort(key=takeId)
 	
