@@ -51,7 +51,7 @@ class ItemRepository(BaseRepository):
 
         return list_model_to_entity(model)
 
-    def update(self, update_item_req: UpdateItemRequest) -> TodoItem:
+    def update(self, update_item_req: UpdateItemRequest) -> TodoList:
 
         stmt = select(ItemModel).where(ItemModel.id == update_item_req.id )
         model = self.session.scalars(stmt).one()

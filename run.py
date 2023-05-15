@@ -62,9 +62,9 @@ if __name__ == "__main__":
     # todo_list = update_list_usecase.process(update_list_req)
     # print(todo_list)
     
-    update_item_req = UpdateItemRequest(2,status=2,content="make cook and go shopping",deletion_date_str="16/05/2023")
-    todo = update_item_usecase.process(update_item_req)
-    print(todo)
+    # update_item_req = UpdateItemRequest(2,status=2,content="make cook and go shopping",deletion_date_str="16/05/2023")
+    # todo = update_item_usecase.process(update_item_req)
+    # print(todo)
 
 
     #app.run()

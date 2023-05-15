@@ -1,7 +1,11 @@
+from dataclasses import asdict
+
 from application.entities.TodoItem import TodoItem
 from application.entities.TodoList import TodoList
 from application.providers.orm.models import ListModel, ItemModel
 from application.entities.ItemStatus import ItemStatus
+from application.dto.response.GetListResponse import GetListResponse
+from application.dto.response.GetItemResponse import GetItemResponse
 
 
 def list_model_to_entity(model: ListModel) -> TodoList:
@@ -83,3 +87,24 @@ def list_copy_to_model(list: TodoList, model: ListModel):
         for item_model in model.item_list:
             if (item.ID == item_model.id):
                 item_copy_to_model(item, item_model)
+
+def list_to_response(list: TodoList) -> GetListResponse:
+    return GetListResponse(
+        id=list.ID,
+        creation_date= list.creation_date.strftime("%d/%m/%Y"),
+        update_date=list.update_date.strftime("%d/%m/%Y"),
+        deletion_date= list.deletion_time.strftime("%d/%m/%Y"),
+        completion_percentage= list.completion_percentage,
+        item_list= [ asdict(item_to_response(item)) for item in list.item_list ]
+    )
+
+def item_to_response(item: TodoItem) -> GetItemResponse:
+    return GetItemResponse(
+        id= item.ID,
+        creation_date= item.creation_date.strftime("%d/%m/%Y"),
+        update_date= item.update_date.strftime("%d/%m/%Y"),
+        deletion_date= item.deletion_time.strftime("%d/%m/%Y"),
+        content = item.content,
+        status = item.status.value,
+        list_id = item.list.ID,
+    )
