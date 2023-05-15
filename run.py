@@ -1,5 +1,6 @@
 from application.app import create_app 
 
+
 # Temizlenecek Importlar
 from datetime import date
 from application.entities.TodoList import TodoList
@@ -35,22 +36,22 @@ from application.entities.PrivilegedUser import PrivilegedUser
 from application.entities.NormalUser import NormalUser
 
 if __name__ == "__main__":
-    app = create_app(False)
+    app = create_app(True)
 
-    list_repo = ListRepository()
-    item_repo = ItemRepository()
-    user_repo = UserRepository()
+    # list_repo = ListRepository()
+    # item_repo = ItemRepository()
+    # user_repo = UserRepository()
 
-    add_item_usecase = AddItemUseCase(item_repo)
-    get_item_usecase = GetItemUseCase(item_repo)
-    update_item_usecase = UpdateItemUseCase(item_repo)
+    # add_item_usecase = AddItemUseCase(item_repo)
+    # get_item_usecase = GetItemUseCase(item_repo)
+    # update_item_usecase = UpdateItemUseCase(item_repo)
 
-    add_list_usecase = AddListUseCase(list_repo)
-    get_list_usecase = GetListUseCase(list_repo)
-    update_list_usecase = UpdateListUseCase(list_repo)
+    # add_list_usecase = AddListUseCase(list_repo)
+    # get_list_usecase = GetListUseCase(list_repo)
+    # update_list_usecase = UpdateListUseCase(list_repo)
 
-    add_user_usecase = AddUserUseCase(user_repo)
-    get_user_usecase = GetUserUseCase(user_repo)
+    # add_user_usecase = AddUserUseCase(user_repo)
+    # get_user_usecase = GetUserUseCase(user_repo)
 
     # # Successfully add new list
     # add_list_req = AddListRequest(name= "My new List", deletion_date_str="12/02/1998")
@@ -90,4 +91,4 @@ if __name__ == "__main__":
     # print(user.name, user.password, user.id)
 
 
-    #app.run()
+    app.run()

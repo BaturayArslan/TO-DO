@@ -1,4 +1,5 @@
 from flask import Blueprint,request,jsonify
+from flask_jwt_extended import jwt_required
 from dataclasses import asdict
 
 from application.dto.request.AddItemRequest import AddItemRequest
@@ -11,10 +12,11 @@ from application.use_cases.item.AddItemUseCase import AddItemUseCase
 from application.use_cases.item.UpdateItemUseCase import UpdateItemUseCase
 from application.utils.utils import list_to_response, item_to_response
 
-item_blueprint = Blueprint("item_blueprint", __name__,url_defaults="/item")
+item_blueprint = Blueprint("item_blueprint", __name__, url_prefix="/item")
 
 
 @item_blueprint.route("/get",methods=["POST"])
+@jwt_required()
 def get_item():
     try:
         get_item_req = GetItemRequest(**request.json)
@@ -29,6 +31,7 @@ def get_item():
     return jsonify(asdict(get_item_response))
 
 @item_blueprint.route("/create", methods=["POST"])
+@jwt_required()
 def create_item():
     try:
         add_item_req = AddItemRequest(**request.json)
@@ -43,6 +46,7 @@ def create_item():
     return jsonify(asdict(list_response))
 
 @item_blueprint.route("/update", methods=["POST"])
+@jwt_required()
 def update_item():
     try:
         update_item_req = UpdateItemRequest(**request.json)

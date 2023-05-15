@@ -1,9 +1,10 @@
 from sqlalchemy import select
 from dataclasses import fields, asdict
 from datetime import date
+from typing import List
 
 from application.repositories.BaseRepository import BaseRepository
-from application.providers.orm.models import ListModel, ItemModel
+from application.providers.orm.models import ListModel, ItemModel,UserModel
 from application.dto.request.UpdateListRequest import UpdateListRequest
 from application.entities.TodoList import TodoList
 from application.dto.request.GetListRequest import GetListRequest
@@ -24,13 +25,18 @@ class ListRepository(BaseRepository):
         return list_model_to_entity(list_model)
     
     def insert(self,add_list_request: AddListRequest) -> TodoList:
+        stmt = select(UserModel).where(UserModel.id == add_list_request.user_id)
+        user_model = self.session.scalars(stmt).one()
+
         model = ListModel(
             name=add_list_request.name,
+            user_id = add_list_request.user_id,
             deletion_date=add_list_request.deletion_date,
             creation_date=date.today(),
             completion_percentage=0,
         )
-        self.session.add(model)
+
+        user_model.lists.append(model)
         self.session.commit()
         self.session.flush()
         self.session.refresh(model)
@@ -52,6 +58,10 @@ class ListRepository(BaseRepository):
         self.session.commit()
 
         return todo_list
+
+    def get_all(self) -> List[TodoList]:
+        lists_model = self.session.query(ListModel).all()
+        return [list_model_to_entity(list_model) for list_model in lists_model]
     
     def delete(self, id):
         raise NotImplementedError()

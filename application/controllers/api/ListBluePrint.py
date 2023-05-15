@@ -1,4 +1,5 @@
 from flask import Blueprint,request,jsonify
+from flask_jwt_extended import jwt_required,get_jwt_identity
 from dataclasses import asdict
 
 from application.dto.request.AddListRequest import AddListRequest
@@ -11,10 +12,11 @@ from application.use_cases.list.AddListUseCase import AddListUseCase
 from application.use_cases.list.UpdateListUseCase import UpdateListUseCase
 from application.utils.utils import list_to_response
 
-list_blueprint = Blueprint("list_blueprint", __name__,url_defaults="/list")
+list_blueprint = Blueprint("list_blueprint", __name__,url_prefix="/list")
 
 
 @list_blueprint.route("/get",methods=["POST"])
+@jwt_required()
 def get_list():
     try:
         get_list_req = GetListRequest(**request.json)
@@ -29,9 +31,10 @@ def get_list():
     return jsonify(asdict(get_list_response))
 
 @list_blueprint.route("/create", methods=["POST"])
+@jwt_required()
 def create_list():
     try:
-        add_list_req = AddListRequest(**request.json)
+        add_list_req = AddListRequest(**request.json,user_id=get_jwt_identity())
     except Exception as e:
         raise ValueError("Invalid Input")
     
@@ -43,6 +46,7 @@ def create_list():
     return jsonify(asdict(list_response))
 
 @list_blueprint.route("/update", methods=["POST"])
+@jwt_required()
 def update_list():
     try:
         update_list_req = UpdateListUseCase(**request.json)

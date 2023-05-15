@@ -17,6 +17,8 @@ class ListModel(Base):
     __tablename__ = "TodoList"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("User.id"))
+    user: Mapped["UserModel"] = relationship(back_populates="lists")
     name: Mapped[str] = mapped_column(String(30))
     creation_date: Mapped[date] = mapped_column(Date())
     update_date: Mapped[Optional[date]] = mapped_column(Date())
@@ -53,6 +55,6 @@ class UserModel(Base):
     name: Mapped[str] = mapped_column(String(30))
     password: Mapped[str] = mapped_column(String(100))
     privileged: Mapped[bool] = mapped_column(Boolean())
-
+    lists: Mapped[List["ListModel"]] = relationship(back_populates="user", cascade="all, delete-orphan")
     def __repr__(self) -> str:
         return f"User(id={self.id}, name={self.name}, password={self.password}, privileged={self.privileged})"
