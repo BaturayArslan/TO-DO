@@ -4,7 +4,7 @@ from sqlalchemy.orm import (
     mapped_column,
     relationship
 )
-from sqlalchemy import String, Date, Integer, ForeignKey
+from sqlalchemy import String, Date, Integer, ForeignKey, Boolean
 from datetime import date
 from typing import Optional, List
 
@@ -44,3 +44,15 @@ class ItemModel(Base):
     def __repr__(self) -> str:
          return f"ItemModel(id={self.id}, list_id={self.list_id}, creation_date={self.creation_date}, update_date={self.update_date},\
             deletion_date={self.deletion_date}, status={self.status}, content={self.content}, list={self.list})"
+
+
+class UserModel(Base):
+    __tablename__ = "User"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(30))
+    password: Mapped[str] = mapped_column(String(100))
+    privileged: Mapped[bool] = mapped_column(Boolean())
+
+    def __repr__(self) -> str:
+        return f"User(id={self.id}, name={self.name}, password={self.password}, privileged={self.privileged})"
