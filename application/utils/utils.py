@@ -68,6 +68,7 @@ def item_entity_to_model(item_entity: TodoItem) -> ItemModel:
 def item_copy_to_model(item: TodoItem, model: ItemModel):
     model.update_date = item.update_date
     model.status = item.status.name
+    model.content = item.content
     model.deletion_date = item.deletion_time
     model.creation_date = item.creation_date
 

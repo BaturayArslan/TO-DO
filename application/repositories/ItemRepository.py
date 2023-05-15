@@ -55,9 +55,12 @@ class ItemRepository(BaseRepository):
 
         stmt = select(ItemModel).where(ItemModel.id == update_item_req.id )
         model = self.session.scalars(stmt).one()
+
         todo_list = list_model_to_entity(model.list)
         todo_list.update_item(model.id,  asdict(update_item_req))
 
         list_copy_to_model(todo_list, model.list)
         
         self.session.commit()
+
+        return todo_list

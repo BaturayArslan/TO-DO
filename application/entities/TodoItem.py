@@ -13,9 +13,13 @@ class TodoItem(BaseItem):
 		self.update_date = update_date
 
 	def update(self, values: dict) -> None:
-		for key, value in values.items():
-			setattr(self, key, value)
-		self.update_date(date.today())
+		content = values.get("content")
+		if(content): self.content = content
+		status = values.get("status")
+		if(status): self.status = ItemStatus(status)
+		deletion_time = values.get("deletion_date")
+		if(deletion_time): self.deletion_time = deletion_time
+		self.set_update_date(date.today())
 		
 	def set_update_date(self, update_time: date) -> None:
 		self.update_date = update_time

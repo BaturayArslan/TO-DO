@@ -38,18 +38,33 @@ if __name__ == "__main__":
     get_list_usecase = GetListUseCase(list_repo)
     update_list_usecase = UpdateListUseCase(list_repo)
 
-    # Successfully add new list
-    # add_list_req = AddListRequest(deletion_date_str="12/02/1998")
+    # # Successfully add new list
+    # add_list_req = AddListRequest(name= "My new List", deletion_date_str="12/02/1998")
     # todo_list = add_list_usecase.process(add_list_req)
     # print(todo_list)
 
-    # Successfully add new item to list
+    # # Successfully add new item to list
     # add_item_req = AddItemRequest(content="Make dinner", status=3, list_id=1)
     # todo_list = add_item_usecase.process(add_item_req)
     # print(todo_list)
 
     
+    # get_item_req = GetItemRequest(1)
+    # todo_item = get_item_usecase.process(get_item_req)
+    # print(todo_item)
 
+    # get_list_req = GetListRequest(1)
+    # todo_list = get_list_usecase.process(get_list_req)
+    # print(todo_list)
+
+
+    # update_list_req = UpdateListRequest(id=1,name="My new new List",deletion_date_str="26/08/2023")
+    # todo_list = update_list_usecase.process(update_list_req)
+    # print(todo_list)
     
+    update_item_req = UpdateItemRequest(2,status=2,content="make cook and go shopping",deletion_date_str="16/05/2023")
+    todo = update_item_usecase.process(update_item_req)
+    print(todo)
+
 
     #app.run()

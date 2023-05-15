@@ -37,7 +37,7 @@ class ListRepository(BaseRepository):
         
         return list_model_to_entity(model)
     
-    def update(self, id, update_list_req: UpdateListRequest) -> TodoList:
+    def update(self, update_list_req: UpdateListRequest) -> TodoList:
         stmt = select(ListModel).where(ListModel.id == update_list_req.id )
         model = self.session.scalars(stmt).one()
         todo_list = list_model_to_entity(model)
@@ -46,7 +46,7 @@ class ListRepository(BaseRepository):
         todo_list.update_list(values)
 
         model.name = todo_list.name
-        model.deletion_date = todo_list.delete_item
+        model.deletion_date = todo_list.deletion_time
         model.update_date = todo_list.update_date
 
         self.session.commit()

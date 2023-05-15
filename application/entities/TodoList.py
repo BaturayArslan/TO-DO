@@ -30,8 +30,10 @@ class TodoList(BaseList):
 		self.set_update_date(date.today())
 
 	def update_list(self, values: dict) -> None:
-		for key, value in values.items():
-			setattr(self, key, value)
+		name = values.get("name")
+		deletion_time = values.get("deletion_date")
+		if(name): self.name = name
+		if(deletion_time): self.deletion_time = deletion_time 
 		self.set_update_date(date.today())
 	
 	def set_update_date(self, update_time: date) -> None:
